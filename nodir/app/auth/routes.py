@@ -57,7 +57,7 @@ def login():
     return render_template("auth/login.html", form=form)
 
 
-@auth.route("/logout")
+@auth.route("/logout", methods=["POST"])
 def logout():
     logout_user()
     return redirect(url_for("main.index"))

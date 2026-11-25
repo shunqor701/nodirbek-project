@@ -1,21 +1,27 @@
-import os
 from pathlib import Path
 
-from flask import Flask, render_template
+from flask import Flask, render_template, request
 
 from config import Config
 from .extensions import csrf, db, login_manager
 
 
 def create_app(config_class=Config):
-    app = Flask(__name__, template_folder="../templates", static_folder="../static")
+    app = Flask(__name__, template_folder="..", static_folder="../static")
     app.config.from_object(config_class)
     Path(app.config["UPLOAD_FOLDER"]).mkdir(parents=True, exist_ok=True)
     Path(app.instance_path).mkdir(parents=True, exist_ok=True)
     db.init_app(app)
     login_manager.init_app(app)
+    from .models import PriceSetting, User
+
+    @app.before_request
+    def set_upload_size_limit():
+        if request.path == "/student/orders/new":
+            max_size_mb = db.session.scalar(db.select(PriceSetting.max_file_size_mb)) or 16
+            request.max_content_length = max_size_mb * 1024 * 1024 + 1024 * 1024
+
     csrf.init_app(app)
-    from .models import User
 
     @login_manager.user_loader
     def load_user(user_id):

@@ -1,6 +1,7 @@
 import os
 from datetime import datetime
 
+from pypdf.errors import PdfReadError
 from flask import Blueprint, current_app, flash, redirect, render_template, send_from_directory, url_for
 from flask_login import current_user
 from flask_wtf import FlaskForm
@@ -43,17 +44,18 @@ def new_order():
         if not allowed_pdf(upload.filename):
             flash("Faqat PDF fayl yuklash mumkin.", "danger")
             return render_template("student/new_order.html", form=form)
+        upload.stream.seek(0)
         try:
-            upload.stream.seek(0)
             pages = pdf_page_count(upload)
-            if form.page_to.data > pages or form.page_from.data > form.page_to.data:
-                raise ValueError("Betlar oralig‘i hujjat sahifalariga mos emas.")
-            values = calculate_price(pages, form.page_from.data, form.page_to.data, form.copies.data,
-                                     form.color_mode.data, form.side_mode.data, form.binding_type.data,
-                                     form.is_urgent.data)
-        except Exception as exc:
+        except (PdfReadError, ValueError, OSError) as exc:
             flash(f"PDF faylni tekshirishda xato: {exc}", "danger")
             return render_template("student/new_order.html", form=form)
+        if form.page_to.data > pages or form.page_from.data > form.page_to.data:
+            flash("Betlar oralig‘i hujjat sahifalariga mos emas.", "danger")
+            return render_template("student/new_order.html", form=form)
+        values = calculate_price(pages, form.page_from.data, form.page_to.data, form.copies.data,
+                                 form.color_mode.data, form.side_mode.data, form.binding_type.data,
+                                 form.is_urgent.data)
         code = make_pickup_code()
         order = Order(order_number=make_order_number(), student_id=current_user.id,
                       pickup_code_hash=hash_code(code), total_price=values[-1], is_urgent=form.is_urgent.data)
@@ -94,9 +96,10 @@ def cancel(order_id):
     if order.status not in {"new", "queued"}:
         flash("Bu holatda buyurtmani bekor qilib bo‘lmaydi.", "danger")
     else:
+        old_status = order.status
         order.status = "cancelled"
         order.cancelled_at = datetime.utcnow()
-        db.session.add(OrderStatusHistory(order_id=order.id, old_status="new", new_status="cancelled", changed_by=current_user.id))
+        db.session.add(OrderStatusHistory(order_id=order.id, old_status=old_status, new_status="cancelled", changed_by=current_user.id))
         db.session.commit()
         flash("Buyurtma bekor qilindi.", "success")
     return redirect(url_for("student.detail", order_id=order.id))

@@ -15,7 +15,7 @@
     {% if current_user.role == 'student' %}<a class="btn btn-sm btn-light me-1" href="{{ url_for('student.dashboard') }}">Dashboard</a>{% endif %}
     {% if current_user.role == 'operator' %}<a class="btn btn-sm btn-light me-1" href="{{ url_for('operator.dashboard') }}">Operator</a>{% endif %}
     {% if current_user.role == 'owner' %}<a class="btn btn-sm btn-light me-1" href="{{ url_for('owner.dashboard') }}">Boshqaruv</a>{% endif %}
-    <a class="btn btn-sm btn-outline-light" href="{{ url_for('auth.logout') }}">Chiqish</a>
+    <form class="d-inline" method="post" action="{{ url_for('auth.logout') }}"><input type="hidden" name="csrf_token" value="{{ csrf_token() }}"><button class="btn btn-sm btn-outline-light" type="submit">Chiqish</button></form>
   {% else %}<a class="btn btn-sm btn-outline-light me-1" href="{{ url_for('auth.login') }}">Kirish</a><a class="btn btn-sm btn-light" href="{{ url_for('auth.register') }}">Ro‘yxatdan o‘tish</a>{% endif %}
   </div>
 </div></nav>

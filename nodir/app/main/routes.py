@@ -8,5 +8,8 @@ main = Blueprint("main", __name__)
 def index():
     if current_user.is_authenticated:
         targets = {"student": "student.dashboard", "operator": "operator.dashboard", "owner": "owner.dashboard"}
-        return redirect(url_for(targets[current_user.role]))
+        target = targets.get(current_user.role)
+        if target is None:
+            return render_template("errors/403.html"), 403
+        return redirect(url_for(target))
     return render_template("index.html", user=current_user)

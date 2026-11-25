@@ -94,7 +94,13 @@ nodir/
 │   ├── operator/routes.py   # Operator funksiyalari
 │   ├── owner/routes.py      # Egasi funksiyalari
 │   └── main/routes.py       # Bosh sahifa
-├── templates/               # O‘zbek tilidagi Jinja2 sahifalar
+├── base.html                # Umumiy Jinja2 layout
+├── index.html               # Bosh sahifa
+├── auth/                    # Kirish va ro‘yxatdan o‘tish sahifalari
+├── errors/                  # Xato sahifalari
+├── operator/                # Operator sahifalari
+├── owner/                   # Egasi sahifalari
+├── student/                 # Talaba sahifalari
 ├── static/css/style.css     # Umumiy UI dizayn
 ├── tests/                   # Avtomatik testlar
 ├── uploads/                 # Yuklangan PDF fayllar
