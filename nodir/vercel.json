@@ -5,7 +5,7 @@
   "outputDirectory": "public",
   "functions": {
     "wsgi.py": {
-      "includeFiles": "{app/**,views/**}"
+      "includeFiles": "{app/**,views/**,public/**}"
     }
   }
 }

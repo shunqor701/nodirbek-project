@@ -174,10 +174,15 @@ Brauzerda [http://localhost:5173](http://localhost:5173) manzilini oching.
 ## Vercel deployment
 
 Vercel Flask ilovasini `wsgi.py` entrypoint orqali ishga tushiradi. HTML
-shablonlari `views/` ichida qoladi, CSS esa `public/` orqali tarqatiladi.
-`vercel.json` shablonlarni serverless funksiyaga qo‘shadi. GitHub repozitoriyni
-yangilab, Vercel'da qayta deploy qiling. Vercel sozlamalarida alohida,
-tasodifiy `SECRET_KEY` kiriting.
+shablonlari `views/` ichida qoladi; React ilovasi `npm run build` orqali
+`public/` ga yig‘iladi va bosh sahifada ko‘rsatiladi. `vercel.json` Flask
+funksiyasiga kerakli ilova, shablon va build fayllarini qo‘shadi.
+
+Vercel Dashboard → loyiha → **Settings → Environment Variables** bo‘limida
+`SECRET_KEY` nomli maxfiy qiymat yarating. Uni GitHub kodiga yozmang. Qiymat
+qo‘shilgach, o‘zgarish tegishli **Production** yoki **Preview** muhitiga
+qo‘llanishi uchun yangi deployment yarating. Bu qiymat bo‘lmasa Flask ilovasi
+ishga tushmaydi va Vercel `FUNCTION_INVOCATION_FAILED` xatosini qaytaradi.
 
 Vercel funksiyalaridagi `/tmp` saqlash joyi vaqtinchalik: default SQLite baza
 va yuklangan PDF fayllar doimiy saqlanmaydi. Ishlab chiqarish muhiti uchun
