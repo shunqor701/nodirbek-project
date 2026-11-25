@@ -1,1 +1,2 @@
 {% extends "base.html" %}{% block content %}<div class="alert alert-success"><h2>Buyurtma yaratildi</h2><p>Raqam: <b>{{ order.order_number }}</b></p><p>Olish kodi: <strong class="fs-3">{{ pickup_code }}</strong></p><p>Kodni saqlab qo‘ying.</p><a class="btn btn-primary" href="{{ url_for('student.dashboard') }}">Buyurtmalarim</a></div>{% endblock %}
+ 

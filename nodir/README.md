@@ -94,19 +94,14 @@ nodir/
 │   ├── operator/routes.py   # Operator funksiyalari
 │   ├── owner/routes.py      # Egasi funksiyalari
 │   └── main/routes.py       # Bosh sahifa
-├── base.html                # Umumiy Jinja2 layout
-├── index.html               # Bosh sahifa
-├── auth/                    # Kirish va ro‘yxatdan o‘tish sahifalari
-├── errors/                  # Xato sahifalari
-├── operator/                # Operator sahifalari
-├── owner/                   # Egasi sahifalari
-├── student/                 # Talaba sahifalari
-├── static/css/style.css     # Umumiy UI dizayn
+├── views/                   # Jinja2 HTML sahifalari
+├── public/css/style.css     # Umumiy UI dizayn
 ├── tests/                   # Avtomatik testlar
 ├── uploads/                 # Yuklangan PDF fayllar
 ├── instance/                # SQLite bazasi
 ├── config.py
 ├── run.py
+├── wsgi.py                  # Vercel Flask entrypoint
 ├── seed.py
 ├── cleanup_files.py
 ├── ER_DIAGRAM.md
@@ -159,6 +154,19 @@ flask --app run.py run --debug
 ```
 
 Brauzerda [http://127.0.0.1:5000](http://127.0.0.1:5000) manzilini oching.
+
+## Vercel deployment
+
+Vercel Flask ilovasini `wsgi.py` entrypoint orqali ishga tushiradi. HTML
+shablonlari `views/` ichida qoladi, CSS esa `public/` orqali tarqatiladi.
+`vercel.json` shablonlarni serverless funksiyaga qo‘shadi. GitHub repozitoriyni
+yangilab, Vercel'da qayta deploy qiling. Vercel sozlamalarida alohida,
+tasodifiy `SECRET_KEY` kiriting.
+
+Vercel funksiyalaridagi `/tmp` saqlash joyi vaqtinchalik: default SQLite baza
+va yuklangan PDF fayllar doimiy saqlanmaydi. Ishlab chiqarish muhiti uchun
+`DATABASE_URL` orqali doimiy PostgreSQL bazasi va fayllar uchun doimiy obyekt
+saqlash xizmatini ulash kerak.
 
 Serverni to‘xtatish:
 

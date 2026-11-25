@@ -7,10 +7,16 @@ from .extensions import csrf, db, login_manager
 
 
 def create_app(config_class=Config):
-    app = Flask(__name__, template_folder="..", static_folder="../static")
+    app = Flask(
+        __name__,
+        template_folder="../views",
+        static_folder="../public",
+        static_url_path="",
+    )
     app.config.from_object(config_class)
     Path(app.config["UPLOAD_FOLDER"]).mkdir(parents=True, exist_ok=True)
-    Path(app.instance_path).mkdir(parents=True, exist_ok=True)
+    if not app.config["IS_VERCEL"]:
+        Path(app.instance_path).mkdir(parents=True, exist_ok=True)
     db.init_app(app)
     login_manager.init_app(app)
     from .models import PriceSetting, User

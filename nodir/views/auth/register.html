@@ -1,1 +1,2 @@
 {% extends "base.html" %}{% block title %}Ro‘yxatdan o‘tish{% endblock %}{% block content %}<div class="form-card"><h2>Talaba ro‘yxati</h2><form method="post">{{ form.hidden_tag() }}{% for f in [form.full_name,form.username,form.email,form.password,form.confirm] %}{{ f.label(class="form-label") }}{{ f(class="form-control mb-2") }}{% for e in f.errors %}<small class="text-danger">{{ e }}</small>{% endfor %}{% endfor %}{{ form.submit(class="btn btn-primary mt-2") }}</form></div>{% endblock %}
+ 
