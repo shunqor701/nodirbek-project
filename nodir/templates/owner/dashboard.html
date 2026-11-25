@@ -1,0 +1,1 @@
+{% extends "base.html" %}{% block content %}<h2>Markaz egasi paneli</h2><a class="btn btn-primary mb-3" href="{{ url_for('owner.prices') }}">Narxlarni boshqarish</a><p>Jami ko‘rsatilgan buyurtmalar: {{ orders|length }}</p>{% endblock %}

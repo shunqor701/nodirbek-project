@@ -1,0 +1,19 @@
+{% extends "base.html" %}{% block title %}Bosh sahifa · Print navbati{% endblock %}{% block content %}
+<section class="hero mb-4">
+  <div class="eyebrow mb-3">Raqamli chop etish xizmati</div>
+  <h1>Navbatni kutmang.<br>Hujjatingiz tayyor bo‘lsin.</h1>
+  <p class="mt-4 mb-4">PDF faylingizni onlayn yuboring, chop etish parametrlarini tanlang va buyurtma tayyor bo‘lganda olish kodi bilan olib keting.</p>
+  {% if current_user.is_authenticated %}
+    <a class="btn btn-light" href="{{ url_for('main.index') }}"><i class="bi bi-grid me-2"></i>Kabinetga o‘tish</a>
+  {% else %}
+    <a class="btn btn-light me-2" href="{{ url_for('auth.register') }}">Buyurtma berishni boshlash <i class="bi bi-arrow-right ms-1"></i></a>
+    <a class="btn btn-outline-light" href="{{ url_for('auth.login') }}">Kirish</a>
+  {% endif %}
+</section>
+<section class="row g-3 mb-4">
+  <div class="col-md-4"><div class="feature-card"><div class="feature-icon mb-3"><i class="bi bi-cloud-arrow-up"></i></div><h5>Faylni yuboring</h5><p class="muted mb-0">PDF hujjatingizni xavfsiz yuklang va betlar sonini avtomatik aniqlating.</p></div></div>
+  <div class="col-md-4"><div class="feature-card"><div class="feature-icon mb-3"><i class="bi bi-sliders"></i></div><h5>Parametrni tanlang</h5><p class="muted mb-0">Rang, nusxa, betlar oralig‘i va muqova turini o‘zingiz belgilang.</p></div></div>
+  <div class="col-md-4"><div class="feature-card"><div class="feature-icon mb-3"><i class="bi bi-ticket-perforated"></i></div><h5>Kod bilan oling</h5><p class="muted mb-0">Buyurtma tayyor bo‘lganda yagona olish kodi bilan navbatsiz olib keting.</p></div></div>
+</section>
+<div class="panel d-flex flex-wrap justify-content-between align-items-center gap-3"><div><div class="eyebrow text-primary">Oddiy va qulay</div><h4 class="mb-1">Chop etish jarayoni bir necha daqiqada</h4><p class="muted mb-0">Talaba, operator va markaz egasi uchun alohida boshqaruv paneli.</p></div><i class="bi bi-arrow-up-right-circle text-primary fs-1"></i></div>
+{% endblock %}
