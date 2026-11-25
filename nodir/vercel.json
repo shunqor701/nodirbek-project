@@ -1,8 +1,11 @@
 {
   "$schema": "https://openapi.vercel.sh/vercel.json",
+  "framework": "flask",
+  "buildCommand": "npm install && npm run build",
+  "outputDirectory": "public",
   "functions": {
     "wsgi.py": {
-      "includeFiles": "views/**"
+      "includeFiles": "{app/**,views/**}"
     }
   }
 }

@@ -19,7 +19,7 @@ An’anaviy jarayonda talaba markazga boradi, navbat kutadi, faylni operatorga b
 6. operator buyurtmalarni navbat asosida chop etadi;
 7. buyurtma tayyor bo‘lganda talaba kod orqali navbatsiz olib ketadi.
 
-Loyiha kichik nusxa ko‘paytirish markazi uchun mo‘ljallangan. U murakkab mikroservislar yoki alohida frontend frameworklarisiz, tushunarli Flask monoliti sifatida qurilgan. Shu sababli kodni himoyada tushuntirish, o‘zgartirish va kengaytirish oson.
+Loyiha kichik nusxa ko‘paytirish markazi uchun mo‘ljallangan. React frontend Flask JSON API bilan ishlaydi; backend va ma’lumotlar bazasi esa Flask loyihasida qoladi.
 
 ## Asosiy imkoniyatlar
 
@@ -75,7 +75,8 @@ Buyurtma yaratilgan paytdagi narx va parametrlar alohida saqlanadi. Keyinchalik 
 | Form validation | Flask-WTF, WTForms, CSRF |
 | PDF tahlili | pypdf |
 | Parol xavfsizligi | Werkzeug password hashing |
-| Frontend | Jinja2, Bootstrap 5, Bootstrap Icons |
+| Frontend | React, Vite, Bootstrap 5, Bootstrap Icons |
+| API | Flask JSON API, Flask-Login session va CSRF |
 | Testlar | pytest, pytest-flask |
 | Konfiguratsiya | python-dotenv |
 
@@ -95,13 +96,17 @@ nodir/
 │   ├── owner/routes.py      # Egasi funksiyalari
 │   └── main/routes.py       # Bosh sahifa
 ├── views/                   # Jinja2 HTML sahifalari
-├── public/css/style.css     # Umumiy UI dizayn
+├── src/                     # React ilovasi va CSS
+├── public/                  # Vite build natijasi
 ├── tests/                   # Avtomatik testlar
 ├── uploads/                 # Yuklangan PDF fayllar
 ├── instance/                # SQLite bazasi
 ├── config.py
 ├── run.py
 ├── wsgi.py                  # Vercel Flask entrypoint
+├── index.html               # React ilovasining Vite entrypointi
+├── package.json
+├── vite.config.js
 ├── seed.py
 ├── cleanup_files.py
 ├── ER_DIAGRAM.md
@@ -130,6 +135,7 @@ py -m venv .venv
 
 ```bash
 pip install -r requirements.txt
+npm install
 ```
 
 ### 3. Test hisoblari va boshlang‘ich sozlamalarni yaratish
@@ -149,11 +155,21 @@ Oddiy ro‘yxatdan o‘tish orqali faqat `student` roli beriladi. Foydalanuvchi 
 
 ### 4. Serverni ishga tushirish
 
+Backend va React frontendni alohida terminal oynalarida ishga tushiring.
+
+1-terminal:
+
 ```bash
 flask --app run.py run --debug
 ```
 
-Brauzerda [http://127.0.0.1:5000](http://127.0.0.1:5000) manzilini oching.
+2-terminal:
+
+```bash
+npm run dev
+```
+
+Brauzerda [http://localhost:5173](http://localhost:5173) manzilini oching.
 
 ## Vercel deployment
 
